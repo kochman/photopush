@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
-COMMIT="$(git rev-parse HEAD)"
-
 # get photopush directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 cd $DIR
+COMMIT="$(git rev-parse HEAD)"
 
 while true; do
 	if [ ! -d /mnt/photo/photopush ]; then
