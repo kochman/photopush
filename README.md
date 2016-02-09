@@ -2,9 +2,13 @@
 
 Automatically uploads photos from a tethered camera to a remote server.
 
-## Usage
+## Installation
 
-Plop a line such as this into your crontab:
+Depends on [gphotofs](https://github.com/gphoto/gphotofs) and rsync. Requires `/mnt/photo` to be in your fstab. `$HOME/camera` must be an empty directory. `/mnt/photo/photopush` must be a directory.
+
+`git clone https://github.com/kochman/photopush.git`
+
+Plop a line such as this into your crontab (assuming you cloned into $HOME):
 
 `@reboot $HOME/photopush/photopush.sh 2>&1`
 
