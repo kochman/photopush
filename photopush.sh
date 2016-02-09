@@ -20,11 +20,7 @@ while true; do
 		fi
 	fi
 
-	fusermount -u ~/camera
-	gphotofs ~/camera
-	rsync -rtvhP --include=*.JPG --exclude=* /home/pi/camera/*/*/*/ /mnt/photo/photopush/photopush-pi
-
-	# create status file
+	# create/update status file
 	echo "hostname: $(hostname)" > /tmp/photopush-status.txt
 	if find ~/camera -mindepth 1 -print -quit | grep -q .; then
 		echo "camera: connected" >> /tmp/photopush-status.txt
@@ -34,5 +30,10 @@ while true; do
 	echo "addresses: $(hostname -I)" > /tmp/photopush-status.txt
 	echo "commit: $COMMIT" >> /tmp/photopush-status.txt
 	mv /tmp/photopush-status.txt /mnt/photo/photopush/photopush-pi/status.txt
+
+	fusermount -u ~/camera
+	gphotofs ~/camera
+	rsync -rtvhP --include=*.JPG --exclude=* /home/pi/camera/*/*/*/ /mnt/photo/photopush/photopush-pi
+
 	sleep 5
 done
