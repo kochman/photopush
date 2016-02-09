@@ -35,7 +35,7 @@ while true; do
 	# transfer new photos
 	fusermount -u ~/camera
 	gphotofs ~/camera
-	rsync -rtvhP --include=*.JPG --exclude=* /home/pi/camera/*/*/*/ /mnt/photo/photopush/photopush-pi
+	rsync -rtvhP --include=*.JPG --exclude=* ~/camera/*/*/*/ /mnt/photo/photopush/photopush-pi
 
 	sleep 5
 done
