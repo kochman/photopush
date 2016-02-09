@@ -31,6 +31,7 @@ while true; do
 	else
 		echo "camera: disconnected" >> /tmp/photopush-status.txt
 	fi
+	echo "addresses: $(hostname -I)" > /tmp/photopush-status.txt
 	echo "commit: $COMMIT" >> /tmp/photopush-status.txt
 	mv /tmp/photopush-status.txt /mnt/photo/photopush/photopush-pi/status.txt
 	sleep 5
