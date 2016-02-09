@@ -12,6 +12,11 @@ while true; do
 		mount /mnt/photo
 	fi
 
+	# ensure this device has an upload directory
+	if [ ! -d /mnt/photo/photopush/$HOST ]; then
+		mkdir /mnt/photo/photopush/$HOST
+	fi
+
 	# should we update?
 	if [ -f /mnt/photo/photopush/$HOST/update.txt ]; then
 		UPDATE_COMMIT="$(cat /mnt/photo/photopush/$HOST/update.txt)"
