@@ -6,6 +6,7 @@ cd $DIR
 COMMIT="$(git rev-parse HEAD)"
 
 while true; do
+	# make sure destination directory is mounted
 	if [ ! -d /mnt/photo/photopush ]; then
 		mount /mnt/photo
 	fi
@@ -31,6 +32,7 @@ while true; do
 	echo "commit: $COMMIT" >> /tmp/photopush-status.txt
 	mv /tmp/photopush-status.txt /mnt/photo/photopush/photopush-pi/status.txt
 
+	# transfer new photos
 	fusermount -u ~/camera
 	gphotofs ~/camera
 	rsync -rtvhP --include=*.JPG --exclude=* /home/pi/camera/*/*/*/ /mnt/photo/photopush/photopush-pi
