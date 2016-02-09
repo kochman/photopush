@@ -6,6 +6,12 @@ Automatically uploads photos from a tethered camera to a remote server.
 
 Plop a line such as this into your crontab:
 
-`@reboot $HOME/photopush/update-run.sh 2>&1`
+`@reboot $HOME/photopush/photopush.sh 2>&1`
 
-Photopush will pull the latest changes from its repository, overwrite any local modifications, and then run.
+## Status
+
+Photopush creates a `status.txt` file that contains basic status information.
+
+## Updating
+
+Create an `update.txt` file containing the Git revision you wish to deploy. Photopush will check this revision out and restart itself after it has transferred photos in its queue.
