@@ -4,6 +4,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 cd $DIR
 COMMIT="$(git rev-parse HEAD)"
+HOST="$(hostname)"
 
 while true; do
 	# make sure destination directory is mounted
@@ -12,8 +13,8 @@ while true; do
 	fi
 
 	# should we update?
-	if [ -f /mnt/photo/photopush/photopush-pi/update.txt ]; then
-		UPDATE_COMMIT="$(cat /mnt/photo/photopush/photopush-pi/update.txt)"
+	if [ -f /mnt/photo/photopush/$HOST/update.txt ]; then
+		UPDATE_COMMIT="$(cat /mnt/photo/photopush/$HOST/update.txt)"
 		if [ "$COMMIT" != "$UPDATE_COMMIT" ]; then
 			git fetch --all
 			git reset --hard $UPDATE_COMMIT
@@ -30,12 +31,12 @@ while true; do
 	fi
 	echo "addresses: $(hostname -I)" >> /tmp/photopush-status.txt
 	echo "commit: $COMMIT" >> /tmp/photopush-status.txt
-	mv /tmp/photopush-status.txt /mnt/photo/photopush/photopush-pi/status.txt
+	mv /tmp/photopush-status.txt /mnt/photo/photopush/$HOST/status.txt
 
 	# transfer new photos
 	fusermount -u ~/camera
 	gphotofs ~/camera
-	rsync -rtvhP --include=*.JPG --exclude=* ~/camera/*/*/*/ /mnt/photo/photopush/photopush-pi
+	rsync -rtvhP --include=*.JPG --exclude=* ~/camera/*/*/*/ /mnt/photo/photopush/$HOST
 
 	sleep 5
 done
