@@ -2,9 +2,23 @@
 
 COMMIT="$(git rev-parse HEAD)"
 
+# get photopush directory
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+cd $DIR
+
 while true; do
 	if [ ! -d /mnt/photo/photopush ]; then
 		mount /mnt/photo
+	fi
+
+	# should we update?
+	if [ -f /mnt/photo/photopush/photopush-pi/update.txt ]; then
+		UPDATE_COMMIT="$(cat /mnt/photo/photopush/photopush-pi/update.txt)"
+		if [ "$COMMIT" != "$UPDATE_COMMIT" ]; then
+			git fetch --all
+			git reset --hard $UPDATE_COMMIT
+			exec ./photopush.sh
+		fi
 	fi
 
 	fusermount -u ~/camera
